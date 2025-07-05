@@ -6,6 +6,7 @@ import {
 	NodeOperationError,
 	NodeConnectionType,
 	IHttpRequestOptions,
+	IHttpRequestMethods,
 } from 'n8n-workflow';
 
 export class WoltClient implements INodeType {
@@ -19,7 +20,6 @@ export class WoltClient implements INodeType {
 		description: 'Interact with the Wolt API',
 		defaults: {
 			name: 'Wolt API',
-
 		},
 		inputs: [NodeConnectionType.Main],
 		outputs: [NodeConnectionType.Main],
@@ -36,6 +36,12 @@ export class WoltClient implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
+					{
+						name: 'Get Menu JSON',
+						value: 'getMenu',
+						action: 'Retrieves the menu information for a specific venue',
+						description: 'The response includes a resource_url that can be used to poll for the actual menu details',
+					},
 					{
 						name: 'Update Items',
 						value: 'updateItems',
@@ -93,19 +99,25 @@ export class WoltClient implements INodeType {
 						: 'https://pos-integration-service.development.dev.woltapi.com';
 
 				let endpoint = '';
+				let method: IHttpRequestMethods = 'PATCH';
 
 				switch (operation) {
 					case 'updateItems':
 						endpoint = `/venues/${venueId}/items`;
+						method = 'PATCH';
 						break;
 					case 'updateInventory':
 						endpoint = `/venues/${venueId}/items/inventory`;
+						method = 'PATCH';
+					case 'getMenu':
+						endpoint = `/v2/venues/${venueId}/menu`;
+						method = 'GET';
 					default:
 						break;
 				}
 
 				const options: IHttpRequestOptions = {
-					method: 'PATCH',
+					method,
 					url: `${baseUrl}${endpoint}`,
 					body: data,
 					json: true,

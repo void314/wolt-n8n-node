@@ -1,5 +1,5 @@
 {
-	"name": "wolt-n8n-node",
+	"name": "n8n-node-wolt",
 	"version": "0.0.1",
 	"description": "Wolt integration node for n8n",
 	"keywords": [

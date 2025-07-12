@@ -1,9 +1,11 @@
 {
 	"name": "n8n-nodes-wolt",
-	"version": "0.0.3",
+	"version": "0.0.6",
 	"description": "Wolt integration node for n8n",
 	"keywords": [
-		"n8n-community-node-package", "wolt", "woltApi"
+		"n8n-community-node-package",
+		"wolt",
+		"woltApi"
 	],
 	"license": "MIT",
 	"homepage": "",
@@ -40,6 +42,7 @@
 		]
 	},
 	"devDependencies": {
+		"@types/node": "^24.0.13",
 		"@typescript-eslint/parser": "~8.32.0",
 		"eslint": "^8.57.0",
 		"eslint-plugin-n8n-nodes-base": "^1.16.3",

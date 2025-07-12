@@ -24,6 +24,16 @@ export class WoltClientApi implements ICredentialType {
 			placeholder: 'password',
 		},
 		{
+			displayName: 'WOLT-API-KEY',
+			name: 'apiKey',
+			type: 'string',
+			typeOptions: {
+				password: true,
+			},
+			default: '',
+			placeholder: 'WOLT-API-KEY',
+		},
+		{
 			displayName: 'Environment',
 			name: 'environment',
 			type: 'options',

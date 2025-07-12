@@ -40,7 +40,8 @@ export class WoltClient implements INodeType {
 						name: 'Get Menu JSON',
 						value: 'getMenu',
 						action: 'Retrieves the menu information for a specific venue',
-						description: 'The response includes a resource_url that can be used to poll for the actual menu details',
+						description:
+							'The response includes a resource_url that can be used to poll for the actual menu details',
 					},
 					{
 						name: 'Update Items',
@@ -74,7 +75,7 @@ export class WoltClient implements INodeType {
 				default: JSON.stringify({
 					data: [],
 				}),
-				required: true,
+
 				description: 'The data to send to the API',
 			},
 		],
@@ -88,10 +89,10 @@ export class WoltClient implements INodeType {
 			try {
 				const operation = this.getNodeParameter('operation', i) as string;
 				const venueId = this.getNodeParameter('venueId', i) as string;
-				const data = this.getNodeParameter('data', i);
+				const data = this.getNodeParameter('data', i) as string | undefined;
 
 				const credentials = await this.getCredentials('woltApi');
-				const { username, password, environment } = credentials;
+				const { username, password, environment, apiKey } = credentials;
 
 				const baseUrl =
 					environment === 'production'
@@ -119,15 +120,13 @@ export class WoltClient implements INodeType {
 				const options: IHttpRequestOptions = {
 					method,
 					url: `${baseUrl}${endpoint}`,
-					body: data,
+					body: method !== 'GET' ? data : undefined,
 					json: true,
-					auth: {
-						username: username as string,
-						password: password as string,
-					},
 					headers: {
 						Accept: 'application/json',
 						'Content-Type': 'application/json',
+						'WOLT-API-KEY': apiKey as string,
+						Authorization: `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`,
 					},
 				};
 

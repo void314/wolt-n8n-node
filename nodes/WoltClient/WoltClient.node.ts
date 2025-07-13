@@ -44,6 +44,12 @@ export class WoltClient implements INodeType {
 							'The response includes a resource_url that can be used to poll for the actual menu details',
 					},
 					{
+						name: 'Create a Menu',
+						value: 'createMenu',
+						action: 'Create a menu',
+						description: 'Creates a menu for the venue or replaces the existing one',
+					},
+					{
 						name: 'Update Items',
 						value: 'updateItems',
 						action: 'Update menu items',
@@ -110,6 +116,9 @@ export class WoltClient implements INodeType {
 					case 'updateInventory':
 						endpoint = `/venues/${venueId}/items/inventory`;
 						method = 'PATCH';
+					case 'createMenu':
+						endpoint = `/v1/restaurants/${venueId}/menu`;
+						method = 'POST';
 					case 'getMenu':
 						endpoint = `/v2/venues/${venueId}/menu`;
 						method = 'GET';
